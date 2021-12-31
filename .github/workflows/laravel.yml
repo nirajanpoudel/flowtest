@@ -34,4 +34,4 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: vendor/bin/phpunit
     - name: Execute tests (Unit and Feature tests)
-        run: php artisan test
+      run: php artisan test
