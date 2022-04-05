@@ -10,12 +10,23 @@ jobs:
   laravel-tests:
 
     runs-on: ubuntu-latest
+    services:
+      mssql:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        env:
+          ACCEPT_EULA: Y
+          SA_PASSWORD: root
+        ports:
+          - '1433:1433' 
 
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
         php-version: '8.0'
     - uses: actions/checkout@v2
+    - name: Setup MSSQL
+        run: |
+          sqlcmd -S 127.0.0.1,1433 -U SA -P root -Q 'CREATE DATABASE aistore_data;'
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
     - name: Install Dependencies
