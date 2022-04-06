@@ -26,7 +26,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Setup MSSQL
       run: |
-          sudo -u root /opt/mssql/bin/sqlservr -m sqlcmd
+          sudo systemctl start mssql-server
           sqlcmd -S 127.0.0.1,1433 -U sa -P Pa$$word_1234$ -Q "create database data1;"  
     - name: Copy .env
       run: php -r "file_exists('.env') || copy('.env.example', '.env');"
